@@ -1,0 +1,20 @@
+.App * {
+  font-family: "Bai Jamjuree", sans-serif;
+  font-size: 62.5%;
+}
+
+.App input {
+  font-size: 3em;
+}
+
+.App button {
+  font-size: 3em;
+}
+
+.App p {
+  font-size: 3em;
+}
+
+.App h1 {
+  font-size: 3em;
+}
