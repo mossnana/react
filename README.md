@@ -24,5 +24,10 @@ boards > {ตัว ID ให้มันสุ่มเอาเอง} > {auth
   จากนั้นไปที่ไฟล์ src/index.js เพื่อไปดูโค้ด
 </p>
 
+5. ไปที่ไฟล์ src/App.js
+<p>
+  ไปดูได้ที่ไฟล์ src/App.js
+</p>
+
 ขอขอบคุณ 
 <a href="https://www.djamware.com/post/5bc50ea680aca7466989441d/reactjs-firebase-tutorial-building-firestore-crud-web-application">DJamware > Didin J.</a>
