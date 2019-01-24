@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
+// นำเข้า dependency ชื่อว่า react-router-dom โดยเอามาเฉพาะฟังก์ชั่น Link
 import { Link } from 'react-router-dom';
-import './App.css';
+// นำเข้า library firebase
 import firebase from './Firebase';
 
 class App extends Component {
+  // สร้าง Constructor ของ component App
   constructor(props) {
     super(props);
+    // ตัวแปล "ref" ไว้เก็บข้อมูล Collection ชื่อ "boards"
     this.ref = firebase.firestore().collection('boards');
+    // สร้างตัวแปล "unsubscribe" ไว้ก่อน
     this.unsubscribe = null;
+    // สร้าง state object ใน component App ไว้ก่อน เก็บ Array ชื่อ "boards"
     this.state = {
       boards: []
     };
   }
-
+  // ฟังก์ชั่น onCollectionUpdate ใช้ในการอัพเดทข้อมูลลง collection ส่งค่า querySnapshot เข้าไป
   onCollectionUpdate = (querySnapshot) => {
+    // สร้าง Array ชื่อ boards
     const boards = [];
+    /* 
+    ทำการ loop ค่า querySnapshot ที่ส่งเข้า
+    ค่า querySnapshot แปลงเป็น doc
+    */
     querySnapshot.forEach((doc) => {
+      // ดึงข้อมูลตัวแปล 1 object เก็บในตัวแปล title, description, author ผ่านฟังก์ชั่น data()
       const { title, description, author } = doc.data();
+      // เอา object ใหม่ใส่เข้าไปใน Array ชื่อ boards
       boards.push({
         key: doc.id,
         doc, // DocumentSnapshot
