@@ -29,5 +29,7 @@ boards > {ตัว ID ให้มันสุ่มเอาเอง} > {auth
   ไปดูได้ที่ไฟล์ src/App.js
 </p>
 
+6. ยังไม่เสร็จ ....
+
 ขอขอบคุณ 
 <a href="https://www.djamware.com/post/5bc50ea680aca7466989441d/reactjs-firebase-tutorial-building-firestore-crud-web-application">DJamware > Didin J.</a>
