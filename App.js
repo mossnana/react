@@ -37,11 +37,15 @@ class App extends Component {
         author,
       });
     });
+    // เอาข้อมูล array boards อัพเดทใน state App
     this.setState({
       boards
    });
   }
-
+  /* 
+  เมื่อมีการ render component App ให้ทำการเก็บค่า unsubscribe เป็น this.ref.onSnapshot() 
+  ซึ่ง ฟังก์ชั่น onSnapshot() บน Google Cloud Firestone
+  */
   componentDidMount() {
     this.unsubscribe = this.ref.onSnapshot(this.onCollectionUpdate);
   }
@@ -66,6 +70,7 @@ class App extends Component {
                 </tr>
               </thead>
               <tbody>
+                // ลูปข้อมูลใน state
                 {this.state.boards.map(board =>
                   <tr>
                     <td><Link to={`/show/${board.key}`}>{board.title}</Link></td>
