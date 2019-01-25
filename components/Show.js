@@ -3,20 +3,26 @@ import firebase from "../Firebase";
 import { Link } from "react-router-dom";
 
 class Show extends Component {
+  // ต้องมีการรับค่า props เข้ามา เป็นค่าจาก Router
   constructor(props) {
     super(props);
+    // ทำให้ state ว่างก่อน
     this.state = {
       board: {},
       key: ""
     };
   }
-
+  
+  // เมื่อมีการ render แล้ว ....
   componentDidMount() {
+    // สร้างตัวแปร ref มาเชื่อมต่อ collection ชือ boards ใน firebase
     const ref = firebase
       .firestore()
       .collection("boards")
       .doc(this.props.match.params.id);
+    // ทำการเรียกฟังก์ชั่น get เพื่อเอาข้อมูลออกมา จากนั้น ....
     ref.get().then(doc => {
+      // ถ้าตรวจพบว่ามีข้อมูล
       if (doc.exists) {
         this.setState({
           board: doc.data(),
@@ -28,7 +34,7 @@ class Show extends Component {
       }
     });
   }
-
+  // ฟังก์ชั่นลบข้อมูล
   delete(id) {
     firebase
       .firestore()
