@@ -1,0 +1,35 @@
+{
+  "name": "react-redux-firebase-episode-3",
+  "version": "1.0.0",
+  "description": "React Redux Thunk Firebase",
+  "keywords": [],
+  "main": "src/index.js",
+  "dependencies": {
+    "firebase": "5.9.3",
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
+    "react-redux": "5.1.1",
+    "react-redux-firebase": "2.2.6",
+    "react-router-dom": "5.0.0",
+    "react-scripts": "2.1.8",
+    "redux": "4.0.1",
+    "redux-firebase": "0.3.3",
+    "redux-firestore": "0.7.3",
+    "redux-thunk": "2.3.0"
+  },
+  "devDependencies": {
+    "typescript": "3.3.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
