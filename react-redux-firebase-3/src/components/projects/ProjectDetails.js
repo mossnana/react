@@ -5,6 +5,7 @@ import { compose } from 'redux'
 import { Redirect } from 'react-router-dom'
 import moment from 'moment'
 import { deleteProject } from '../../store/actions/projectActions'
+import { Link } from 'react-router-dom'
 
 const ProjectDetails = (props) => {
   // const id = props.match.params.id;
@@ -24,6 +25,9 @@ const ProjectDetails = (props) => {
                 <div>{moment(project.createedAt.toDate()).calendar()}</div>
             </div>
             <div>
+            <Link to={'/editproject/' + id} key={id}>
+              <button className="btn">Edit</button>
+            </Link>
               <button className="btn red" onClick={() =>
                     { if (window.confirm('Are you sure to delete this project?'))
                       {

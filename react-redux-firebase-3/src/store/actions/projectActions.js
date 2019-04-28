@@ -33,3 +33,25 @@ export const deleteProject = id => {
       })
     }
 }
+
+export const updateProject = (project) => {
+  return (dispatch, getState, {getFirebase, getFirestore}) => {
+
+    const firestore = getFirestore()
+    const profile = getState().firebase.profile
+    const authorId = getState().firebase.auth.uid
+
+    firestore.collection('projects').doc(project.id).set({
+      ...project,
+      authorFirstName: profile.firstName,
+      authorLastName: profile.lastName,
+      authorId: authorId,
+      createedAt: new Date()
+    },
+    {merge: true}).then(() => {
+      dispatch({type: 'UPDATE_PROJECT', project})
+    }).catch((err) => {
+      dispatch({type: 'UPDATE_PROJECT_ERROR', err})
+    })
+  }
+}
