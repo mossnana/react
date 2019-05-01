@@ -4,6 +4,7 @@ admin.initializeApp(functions.config().firebase)
 exports.helloWorld = functions.https.onRequest((request, response) => {
   response.send("Hello from Firebase!");
 });
+
 const createNotification = (notification => {
   return admin.firestore().collection('notifications')
     .add(notification)
@@ -11,7 +12,7 @@ const createNotification = (notification => {
   })
 
 exports.projectCreated = functions.firestore
-  .document('projects/{projectId}') .onCreate(doc => {
+  .document('projects/{projectId}').onCreate(doc => {
     const project = doc.data();
     const notification = {
       content: 'Added a new project',
@@ -21,7 +22,31 @@ exports.projectCreated = functions.firestore
   return createNotification(notification)
 })
 
-exports.userJoined = functions.auth.user() .onCreate(user => {
+exports.projectEdited = functions.firestore
+.document('projects/{projectId}').onUpdate((change, context) => {
+  console.log("onUpdate Function")
+  const project = change.before.data();
+  const notification = {
+    content: `Project ${project.title} was updated.`,
+    user: `${project.authorFirstName} ${project.authorLastName}`,
+    time: admin.firestore.FieldValue.serverTimestamp()
+  }
+  return createNotification(notification)
+})
+
+exports.projectDeleted = functions.firestore
+.document('projects/{projectId}').onDelete(doc => {
+  console.log("onUpdate Function")
+  const project = doc.data();
+  const notification = {
+    content: `Project ${project.title} was deleted.`,
+    user: `${project.authorFirstName} ${project.authorLastName}`,
+    time: admin.firestore.FieldValue.serverTimestamp()
+  }
+  return createNotification(notification)
+})
+
+exports.userJoined = functions.auth.user().onCreate(user => {
   return admin.firestore().collection('users')
     .doc(user.uid).get().then(doc => {
     const newUser = doc.data()
