@@ -26,8 +26,9 @@ exports.projectEdited = functions.firestore
 .document('projects/{projectId}').onUpdate((change, context) => {
   console.log("onUpdate Function")
   const project = change.before.data();
+  const updatedProject = change.after.data();
   const notification = {
-    content: `Project ${project.title} was updated.`,
+    content: `Project ${project.title} was updated to ${updatedProject.title}`,
     user: `${project.authorFirstName} ${project.authorLastName}`,
     time: admin.firestore.FieldValue.serverTimestamp()
   }

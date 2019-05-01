@@ -20,27 +20,30 @@ class EditProject extends Component {
 
     componentDidMount() {
       const { project, id } = this.props
-      this.setState({
-        id: id,
-        title: project.title,
-        content: project.content
-      })
+      if (project){
+        this.setState({
+          id: id,
+          title: project.title,
+          content: project.content
+        })
+      }
     }
 
      render() {
        const { auth, project } = this.props
        console.log(project)
        if (!auth.uid) return <Redirect to='/signin'/>
+       if (!project) return <Redirect to='/'/>
         return (
           <div className="container">
             <form onSubmit={this.handleSubmit} className="white">
                <h5 className="grey-text text-darken-3">Create a New Project</h5>
                  <div className="input-field">
-                   <label htmlFor="title">Project Title</label>
+                   <p>Project Title</p>
                    <input type="text" id="title" onChange={this.handleChange} defaultValue={project.title} />
                  </div>
                  <div className="input-field">
-                        <label htmlFor="content">Project Content</label>
+                        <p>Project Content</p>
                         <input type="text" id="content"	onChange={this.handleChange} defaultValue={project.content} />
                     </div>
                     <div className="input-field">

@@ -23,22 +23,23 @@ const ProjectDetails = (props) => {
             <div className="card-action gret lighten-4 grey-text">
                 <div>Posted by {project.authorFirstName} 	{project.authorLastName}</div>
                 <div>{moment(project.createedAt.toDate()).calendar()}</div>
-            </div>
-            <div>
-            <Link to={'/editproject/' + id} key={id}>
-              <button className="btn">Edit</button>
-            </Link>
-              <button className="btn red" onClick={() =>
-                    { if (window.confirm('Are you sure to delete this project?'))
-                      {
-                        deleteProject(id)
-                        props.history.push('/')
-                      }
-                    }
-                  }
-                >
-                Delete
-              </button>
+                <br/>
+                <div className="right-align">
+                  <Link to={'/editproject/' + id} key={id}>
+                    <button className="btn waves-effect waves-light"><i class="far fa-edit"></i> Edit</button>
+                  </Link>
+                    <button className="btn waves-effect waves-light red" onClick={() =>
+                          { if (window.confirm('Are you sure to delete this project ?'))
+                            {
+                              deleteProject(id)
+                              props.history.push('/')
+                            }
+                          }
+                        }
+                      >
+                      <i class="fas fa-trash-alt"></i> Delete
+                    </button>
+                  </div>
             </div>
         </div>
     </div>
