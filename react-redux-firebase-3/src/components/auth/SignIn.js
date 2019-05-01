@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { signIn } from '../../store/actions/authActions'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 
 class SignIn extends Component {
     state = {
@@ -27,27 +27,28 @@ class SignIn extends Component {
         }
         return (
             <div className="container">
-                <form onSubmit={this.handleSubmit} className="white">
-                    <h5 className="grey-text text-darken-3">Sign In</h5>
-                    <div className="input-field">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" id="email" onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" id="password"
-
-                    onChange={this.handleChange} />
-
-                    </div>
-                    <div className="input-field">
-                    <button className="btn pink lighten-1 z-depth-0">
-
-                    Login</button>
-
-                    </div>
-                </form>
-
+                <div className="card">
+                    <form onSubmit={this.handleSubmit} className="white">
+                        <div className="card-content">
+                            <div className="card-title">
+                                <h5 className="grey-text text-darken-3">SIGN IN</h5>
+                            </div>
+                            <div className="input-field">
+                                <label htmlFor="email">Email</label>
+                                <input type="email" id="email" onChange={this.handleChange} />
+                            </div>
+                            <div className="input-field">
+                                <label htmlFor="password">Password</label>
+                                <input type="password" id="password" onChange={this.handleChange} />
+                            </div>
+                        </div>
+                        <div className="card-action">
+                            <button className="btn green lighten-1 z-depth-0"><i class="fas fa-key"></i> Sign In</button>
+                            &nbsp; &nbsp;
+                            <Link to="/signup" className="btn transparent z-depth-0 black-text"><i class="fas fa-user-plus"></i> Sign Up</Link>
+                        </div>
+                    </form>
+                </div> 
             </div>
         )
     }

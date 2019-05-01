@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 import { connect } from 'react-redux'
 import { createProject } from '../../store/actions/projectActions'
 // Redirect when login yet
@@ -31,18 +32,21 @@ class CreateProject extends Component {
           <div className="container">
             <form onSubmit={this.handleSubmit} className="white">
                <h5 className="grey-text text-darken-3">Create a New Project</h5>
-                 <div className="input-field">
-                   <label htmlFor="title">Project Title</label>
-                   <input type="text" id="title" onChange={this.handleChange} />
-                 </div>
-                 <div className="input-field">
-                        <label htmlFor="content">Project Content</label>
-                        <input type="text" id="content" 	onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">Create</button>
-                    </div>
-                </form>
+               <br/>
+                <div className="input-field">
+                  <label htmlFor="title">Project Title</label>
+                  <input type="text" id="title" onChange={this.handleChange} />
+                </div>
+                <div className="input-field">
+                    <label htmlFor="content">Project Content</label>
+                    <input type="text" id="content" data-length="120" onChange={this.handleChange} />
+                </div>
+                <div className="input-field right-align">
+                    <button className="btn green lighten-1 z-depth-0"><i class="fas fa-pencil-alt"></i> Create</button>
+                    &nbsp; &nbsp;
+                    <Link to="/" className="btn pink lighten-1 z-depth-0"><i class="fas fa-times"></i> Cancel</Link>
+                </div>
+              </form>
             </div>
         )
     }
