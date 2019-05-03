@@ -37,7 +37,7 @@ exports.projectEdited = functions.firestore
 
 exports.projectDeleted = functions.firestore
 .document('projects/{projectId}').onDelete(doc => {
-  console.log("onUpdate Function")
+  console.log("onDelete Function")
   const project = doc.data();
   const notification = {
     content: `Project ${project.title} was deleted.`,
