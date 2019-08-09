@@ -7,13 +7,15 @@
 - Mongoose ทำให้ใช้ MongoDB กับ Nodejs ได้ง่ายขึ้น
 
 * Database Concepts
-SQL | NoSQL
-Database | Database
-Table | Collection
-Row | Document
-Index | Index
-Join | $lookup
-Foreign Key | Reference
+
+| SQL | NoSQL |
+|-----|:-----:|
+| Database | Database |
+| Table | Collection |
+| Row | Document |
+| Index | Index |
+| Join | $lookup |
+| Foreign Key | Reference |
 
 * MongoDB Cluster with Google Cloud Platform
 
@@ -90,8 +92,8 @@ npm install cors dotenv express mongoose
   - สร้าง folder routes ในการกำหนด endpoint เพื่อเริ่มกระบวนการ CRUD กับฐานข้อมูล
     ```javascript
     // users.js
-    const router = require('express').Router() \\ ใช้งาน Function router ของ express
-    let User = require('../models/user.model') \\ เอา User Schema ที่เราสร้างโดย mongoose มาใช้งาน
+    const router = require('express').Router() // ใช้งาน Function router ของ express
+    let User = require('../models/user.model') // เอา User Schema ที่เราสร้างโดย mongoose มาใช้งาน
     
     /* ---------------------- Read ---------------------- */
     // กำหนด endpoint เป็น http://localhost:5000/users/ ใน method แบบ GET
