@@ -1,4 +1,4 @@
-* เรียน MERN Stack
+* เรียน MERN Stack จาก freeCodeCamp
 
 - MongoDB ฐานข้อมูลใช้ mongoDB Atlas
 - Express
@@ -87,5 +87,71 @@ npm install cors dotenv express mongoose
     module.exports = User;
     ```
     
-  - สร้าง folder routes ในการกำหนด endpoint
-    ... รอการอัพเดท ...
+  - สร้าง folder routes ในการกำหนด endpoint เพื่อเริ่มกระบวนการ CRUD กับฐานข้อมูล
+    ```javascript
+    // users.js
+    const router = require('express').Router() \\ ใช้งาน Function router ของ express
+    let User = require('../models/user.model') \\ เอา User Schema ที่เราสร้างโดย mongoose มาใช้งาน
+    
+    /* ---------------------- Read ---------------------- */
+    // กำหนด endpoint เป็น http://localhost:5000/users/ ใน method แบบ GET
+    // ตัว route('/') หมายถึงใน endpoint นี้ /users(ไปกำหนดในไฟล์ index.js)/
+    router.route('/').get((req, res) => {
+    User.find() // คำสั่งค้นหา find() ซึ่งเป็นคำสั่งใน mongoose ในที่นี้ไม่ได้ใส่ argument ใน find() ทำให้ส่งมาทุก Document ใน Collection นั้นๆ
+      .then(users => res.json(users)) // ถ้าสำเร็จให้ส่งค่ากลับมาเป็น JSON
+      .catch(err => res.status(400).json(`Error to get users data : + ${err}`)) // ถ้ามีข้อผิดพลาดให้ขึ้นข้อความผิดพลาด
+    });
+    
+    // กำหนด endpoint เป็น http://localhost:5000/users/{user id} ใน method แบบ GET
+    // เช่น http://localhost:5000/users/1234 -> ในที่นี้หมายถึง user id: 1234
+    router.route('/:id').get((req, res) => {
+    // ใน object req ที่ส่งมาประกอบไปด้วยหลายอย่าง หนึ่งในนั้นคือ params -> id อ่านต่อได้ที่หมายเหตุไว้ด้านล่าง
+    // findById(id) หา Document โดยใช้ ID ในการหา ซึ่งเป็นคำสั่งใน mongoose
+    User.findById(req.params.id)
+    .then(user => res.json(user))
+    .catch(err => res.status(400).json(`Error to user data id ${req.params.id}`))
+    })
+    
+    /* ---------------------- Create ---------------------- */
+    // กำหนด endpoint เป็น http://localhost:5000/users/add ใน method แบบ POST
+    // ตัว route('/add') หมายถึงใน endpoint นี้คือ /users(ไปกำหนดในไฟล์ index.js)/add
+    router.route('/add').post((req, res) => {
+    const username = req.body.username;
+    const newUser = new User({username})
+    newUser.save() // คำสั่งบันทึก save() ซึ่งเป็นคำสั่งใน mongoose
+    .then(() => res.json('User Added'))
+    .catch(err => res.status(400).json(`Error to add users data : ${err}`))
+    });
+    
+    /* ---------------------- Update ---------------------- */
+    // กำหนด endpoint เป็น http://localhost:5000/update/{user id} ใน method แบบ POST
+    // เช่น http://localhost:5000/update/1234 -> ในที่นี้หมายถึง user id: 1234
+    // คอนเซ็บคือ เขียนทับไปเลย โดยการ ....
+    router.route('/update/:id').post((req, res) => {
+    User.findById(req.params.id) // หาตัว document ก่อนโดยใช้ id หา
+      .then(user => { // จากนั้นเอา document -> user มาแก้ไข
+          user.username = req.body.username // แก้ไข username ใน object -> user
+          user.save() // save() ทับไฟล์เดิม
+          .then(() => res.json('Updated !!!'))
+          .catch(err => res.json('Error ', err))
+      })
+      .catch(err => {
+          console.log(err)
+      })
+    })
+    
+    /* ---------------------- Delete ---------------------- */
+    // กำหนด endpoint เป็น http://localhost:5000/{user id} ใน method แบบ DELETE
+    // เช่น http://localhost:5000/1234 โดย method DELETE (กำหนดที่ JSON Header)
+    // ลบ document นั้น mongoose มีคำสั่งให้อยู่แล้ว
+    router.route('/:id').delete((req, res) => {
+      User.findByIdAndDelete(req.params.id)
+        .then(user => res.json(`Deleted user : ${req.params.id}`));
+    })
+    
+    module.exports = router
+    ```
+    - จบกระบวนการหลังบ้านในแบบ localhost ต่อไปก็เป็นการพัฒนาในส่วนหน้าบ้าน
+    
+2. พัฒนาหน้าบ้าน (frontend)
+  - ติดตามตอนต่อไป
