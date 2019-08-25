@@ -1,11 +1,20 @@
-ReduxPre-course ReduxPure functions and Impure functionsPure functions take arguments and return values based on those argument
+# Redux
 
+## Pre-course Redux
+
+### Pure functions and Impure functions
+
+- Pure functions take arguments and return values based on those argument
+
+```javascript
 const add = (a, b) => {
     return a + b;
 }
+```
 
-Impure functions an mutate things from outside their scope or produce side effects.
+- Impure functions an mutate things from outside their scope or produce side effects.
 
+```javascript
 const b;
 
 // function add รับค่าเข้าไปแค่ a แต่กับทำนอกเหนือจาก บริบท เพราะในความเป็นจริงควร return มาแค่ a ตัวเดียว
@@ -25,17 +34,25 @@ const add = (a, b) => {
         // Callback ...
     })
 }
+```
 
-Not Mutating Objects and Arraysการ copy ของ object หรือ array ที่แท้จริง
 
+
+### Not Mutating Objects and Arrays
+
+- การ copy ของ object หรือ array ที่แท้จริง
+
+```javascript
 const original = {a: 1, b: 2};
 const copy = Object.assign({}, original)
 
 // หรือ
 const copy2 = {...original}
+```
 
-การขยาย object หรือ array
+- การขยาย object หรือ array
 
+```javascript
 // Object Extention
 const original = {a: 1, b: 2};
 const extension = {c: 3}
@@ -47,33 +64,54 @@ const more = originl.concat([4, 5])
 
 // หรือ
 const copy2 = {...original, ...extension}
+```
 
-Redux without ReactWhat is Redux Concept ?The whole state tree of your application is kept in one store.
 
-Just one plain old javascript object.
 
-Reducer FunctionReducerFunction(Action, Init State) = New State
+### Redux without React
 
-New State → New View → (Action Creator Function) → Action → RF(Action, Init State) → New State 2
+#### What is Redux Concept ?
 
-New State, New View : เมื่อมีการกระตุ้นเหตุการณ์ใหม่
+- The whole state tree of your application is kept in one store.
+- Just one plain old javascript object.
 
-Action Creator Function (Middleware) : Function จะทำงานตาม logic ที่กำหนดตาม event แต่ return ค่าออกมาเป็น pure function ที่ใช้ในการ update state เท่านั้น
+#### Reducer Function
 
-Action (pure function) : ที่ใช้ในการ Update Init State เท่านั้น
+```mathematica
+ReducerFunction(Action, Init State) = New State
+```
 
-ตัวอย่างเช่น
+- New State &rarr; New View &rarr; (Action Creator Function) &rarr; Action &rarr; RF(Action, Init State) &rarr; New State 2
 
-ReducerFunction(<View />, State) = New <View />
+  - New State, New View : เมื่อมีการกระตุ้นเหตุการณ์ใหม่
+  - Action Creator Function (Middleware) : Function จะทำงานตาม logic ที่กำหนดตาม event แต่ return ค่าออกมาเป็น pure function ที่ใช้ในการ update state เท่านั้น
+  - Action (pure function) : ที่ใช้ในการ Update Init State เท่านั้น
 
-Redux Functions OverviewapplyMiddleware: function()
+- ตัวอย่างเช่น
+
+- ```mathematica
+  ReducerFunction(<View />, State) = New <View />
+  ```
+
+
+
+## Redux Functions Overview
+
+```javascript
+applyMiddleware: function()
 bindActionCreators: function()
 combineReducers: function()
 compose: function()
 createStore: function()
+```
 
-Redux and ReactFile รวม
 
+
+## Redux and React
+
+- File รวม
+
+```javascript
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import { createStore } from "redux";
@@ -136,155 +174,172 @@ ReactDOM.render(
   </Provider>,
   rootElement
 );
+```
 
-แบ่งส่วนอธิบาย
+- แบ่งส่วนอธิบาย
 
-สร้าง store
+  1. สร้าง store
 
-import { createStore } from "redux";
+  ```javascript
+  import { createStore } from "redux";
+  
+  const store = createStore();
+  ```
 
-const store = createStore();
+  2. สร้าง Reducer function เพื่อรับ action ไปเปลี่ยนแปลง state เริ่มต้น
 
-สร้าง Reducer function เพื่อรับ action ไปเปลี่ยนแปลง state เริ่มต้น
-
-// Initial State
-const initState = {
-  number: 1
-};
-
-// Reducer Function
-const reducer = (state = initState, action) => {
-  switch (action.type) {
-    case "ADD":
-      return { number: state.number + 1 };
-    default:
-      return state;
-  }
-};
-
-เพิ่ม Reducer function ใน store
-
-// const store = createStore(--> reducer <--);
-const store = createStore(reducer);
-
-นำตัวแปร store ไปครอบกับ component ที่ต้องการใช้งาน โดยผ่าน Provider
-
-import { Provider } from "react-redux";
-
-const rootElement = document.getElementById("root");
-ReactDOM.render(
-  // Provider from 'react-redux'
-  <Provider store={store}>
-    <AppContainer />
-  </Provider>,
-  rootElement
-);
-
-สามารถนำเอา state ใน store ไปใช้ได้แล้วโดยที่ตอนนี้ state จะเท่ากับ initState
-
-state = {
+  ```javascript
+  // Initial State
+  const initState = {
     number: 1
-}
-
-เมื่ออยู่ใน component ที่อยากใช้งาน เราจะใช้งาน store (state, dispatch) ผ่าน props โดยที่ ....
-
-เรียก state ผ่าน function mapStateToProps
-
-เรียก dispatch ผ่าน function mapDispatchToProps
-
-import { connect } from "react-redux";
-
-class App extends Component {
-  render() {
-    const { number, add } = this.props;
-    return (
-      <div className="App">
-        <h1>Hello CodeSandbox</h1>
-        <h2>{ number }</h2>
-        <button onClick={add}> + </button>
-      </div>
-    );
-  }
-}
-
-const addValue = () => ({
-  type: "ADD"
-});
-
-const mapStateToProps = state => {
-  return state;
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    add() {
-      dispatch(addValue());
+  };
+  
+  // Reducer Function
+  const reducer = (state = initState, action) => {
+    switch (action.type) {
+      case "ADD":
+        return { number: state.number + 1 };
+      default:
+        return state;
     }
   };
-};
+  ```
 
-// AppContainer = App + State + Dispatch
-const AppContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
+  3. เพิ่ม Reducer function ใน store
 
-ความหมายของ ...
+  ```javascript
+  // const store = createStore(--> reducer <--);
+  const store = createStore(reducer);
+  ```
 
-mapStateToProps คือนำ new state ที่ได้ return มาจาก Reducer Function - return { number: state.number + 1 };
+  4. นำตัวแปร store ไปครอบกับ component ที่ต้องการใช้งาน โดยผ่าน Provider
 
-const reducer = (state = initState, action) => {
-  switch (action.type) {
-    case "ADD":
-      return { number: state.number + 1 };
-    default:
-      return state;
+  ```javascript
+  import { Provider } from "react-redux";
+  
+  const rootElement = document.getElementById("root");
+  ReactDOM.render(
+    // Provider from 'react-redux'
+    <Provider store={store}>
+      <AppContainer />
+    </Provider>,
+    rootElement
+  );
+  ```
+
+  5. สามารถนำเอา state ใน store ไปใช้ได้แล้วโดยที่ตอนนี้ state จะเท่ากับ initState
+
+  ```javascript
+  state = {
+      number: 1
   }
-};
+  ```
 
-mapDispatchToProps คือการนำ dispatch (ตัวกลางที่จะวิ่งไปหา reducer ใช้กำหนด action) ไปเป็น props ซึ่งเอาไปใช้เป็น event trigger ในการแปลง state ได้
+  6. เมื่ออยู่ใน component ที่อยากใช้งาน เราจะใช้งาน store (state, dispatch) ผ่าน props โดยที่ ....
+     - เรียก state ผ่าน function **mapStateToProps**
+     - เรียก dispatch ผ่าน function **mapDispatchToProps**
 
-// เขียนแบบที่ 1
-const addValue = () => ({
-  type: "ADD"
-});
-
-const mapDispatchToProps = dispatch => {
-  return {
-    add() {
-      dispatch(addValue());
+  ```javascript
+  import { connect } from "react-redux";
+  
+  class App extends Component {
+    render() {
+      const { number, add } = this.props;
+      return (
+        <div className="App">
+          <h1>Hello CodeSandbox</h1>
+          <h2>{ number }</h2>
+          <button onClick={add}> + </button>
+        </div>
+      );
     }
+  }
+  
+  const addValue = () => ({
+    type: "ADD"
+  });
+  
+  const mapStateToProps = state => {
+    return state;
   };
-};
+  
+  const mapDispatchToProps = dispatch => {
+    return {
+      add() {
+        dispatch(addValue());
+      }
+    };
+  };
+  
+  // AppContainer = App + State + Dispatch
+  const AppContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App);
+  ```
 
-// เขียนแบบที่ 2 สมมุติในกรณีที่มี action มากกว่า 1 action
-import { bindActionCreators } from 'redux'
+  7. ความหมายของ ...
 
-const minusValue = () => ({
-  type: "MINUS"
-});
+     - mapStateToProps คือนำ new state ที่ได้ return มาจาก Reducer Function - return { number: state.number + 1 };
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators({
-      addValue,
-      minusValue
-  }, dispatch)
-};
+     ```javascript
+     const reducer = (state = initState, action) => {
+       switch (action.type) {
+         case "ADD":
+           return { number: state.number + 1 };
+         default:
+           return state;
+       }
+     };
+     ```
 
-// เขียนแบบที่ 3 ในเวอร์ชั่นใหม่ๆ ของ redux สามารถเขียนเป็น plain object ได้เลย
-const mapDispatchToProps = {
-    addValue,
-    minusValue
-};
+     - mapDispatchToProps คือการนำ dispatch (ตัวกลางที่จะวิ่งไปหา reducer ใช้กำหนด action) ไปเป็น props ซึ่งเอาไปใช้เป็น event trigger ในการแปลง state ได้
 
-React-Redux-Thunkเพิ่ม middleware เข้าไปใน ขั้นตอนก่อนการ dispatch
+     ```javascript
+     // เขียนแบบที่ 1
+     const addValue = () => ({
+       type: "ADD"
+     });
+     
+     const mapDispatchToProps = dispatch => {
+       return {
+         add() {
+           dispatch(addValue());
+         }
+       };
+     };
+     
+     // เขียนแบบที่ 2 สมมุติในกรณีที่มี action มากกว่า 1 action
+     import { bindActionCreators } from 'redux'
+     
+     const minusValue = () => ({
+       type: "MINUS"
+     });
+     
+     const mapDispatchToProps = dispatch => {
+       return bindActionCreators({
+           addValue,
+           minusValue
+       }, dispatch)
+     };
+     
+     // เขียนแบบที่ 3 ในเวอร์ชั่นใหม่ๆ ของ redux สามารถเขียนเป็น plain object ได้เลย
+     const mapDispatchToProps = {
+         addValue,
+         minusValue
+     };
+     ```
 
-ใช้ในหลายกรณี
 
-กรณียอดฮิตคือ async fetch ข้อมูล
 
-ตัวอย่าง
+## React-Redux-Thunk
 
+- เพิ่ม middleware เข้าไปใน ขั้นตอนก่อนการ dispatch
+- ใช้ในหลายกรณี
+  - กรณียอดฮิตคือ async fetch ข้อมูล
+- ตัวอย่าง
+
+```javascript
 export const createProject = (project) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     // make async call to database
@@ -307,4 +362,5 @@ export const createProject = (project) => {
       
   }
 };
+```
 
